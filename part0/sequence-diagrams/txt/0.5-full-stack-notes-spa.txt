@@ -1,0 +1,35 @@
+title Full Stack Notes SPA
+
+participant Server
+participant Client
+
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+Server-->Client: 200 OK [html content]
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+Server-->Client: 200 OK [css content]
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+Server-->Client: 200 OK [javascript content]
+
+note right of Client: Execution of the `spa.js` script
+note right of Client:
+Declaring variables
+Initializing the declared variables with values
+Registering callback for an xhttp connection
+Opening the connection
+end note
+
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+
+note right of Client:
+Registering a handler for 'load' event of window object
+3 executions of the connection callback
+end note
+
+Server-->Client: 200 OK [json data: Array<{ content: string, date: string }>]
+
+note right of Client:
+4th and last execution of the connection callback upon successful request end
+Rendering of the notes on the page
+Execution of the handler upon whole page load end
+Registering a handler for 'submit' event of the form
+end note

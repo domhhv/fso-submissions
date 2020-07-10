@@ -1,0 +1,19 @@
+title Full Stack SPA New Note Creation
+
+participant Server
+participant Client
+
+note over Client, Server: Full Stack Notes SPA diagram
+note right of Client:
+Calling form submit handler
+Adding new note the local `notes` array
+Rerendering the notes list in the DOM tree
+Sending a request to the server
+end note
+Client-->Server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note left of Server:
+Matching the route
+Adding new note to the `notes` array
+end note
+Server->Client: 201 CREATED Object<{ message: 'note created'}>
+note right of Client: Logging successful message to the console

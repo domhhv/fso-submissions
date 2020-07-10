@@ -1,0 +1,37 @@
+title Full Stack New Note Creation
+
+participant Server
+participant Client
+
+note right of Client: Handling form submit
+note right of Client: Gathering data from its controls
+note right of Client:
+Sending it to the location with the method
+both of which are specified by the form attributes
+end note
+Client->Server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+note left of Server: Matching the route
+note left of Server: Creating new note object
+note left of Server: Adding it to the `notes` array
+Server-->Client: 302 FOUND [redirect to location: /notes]
+note right of Client: Navigating to /notes path
+note right of Client: Basically reloading the page
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+Server-->Client: 200 OK [html content]
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+Server-->Client: 200 OK [css content]
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+Server-->Client: 200 OK [javascript content]
+
+note right of Client:
+Execution of the script
+Subsequent JSON data request
+end note
+
+Client->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+Server-->Client: 200 OK [json content: Array<{ content: string, date: string }>]
+
+note right of Client:
+Execution of the request event handler
+Rendering of the notes got from the server
+end note
