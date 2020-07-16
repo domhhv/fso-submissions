@@ -5,6 +5,14 @@ const getRandomIndex = length => Math.floor(
   Math.random() * length,
 );
 
+const Anecdote = ({ title, anecdote, point }) => (
+  <>
+    <h1>{title}</h1>
+    <p>{anecdote}</p>
+    <p>Has {point} votes</p>
+  </>
+);
+
 const App = ({ anecdotes }) => {
   const { length } = anecdotes;
   const initialPoints = Array(length).fill(0);
@@ -20,16 +28,26 @@ const App = ({ anecdotes }) => {
     setPoints(points.map(tryToIncrease));
   };
 
+  const topRatedAnecdoteIndex = points.indexOf(Math.max(...points));
+
   return (
     <>
-      <p>{anecdotes[selectedAnecdoteIndex]}</p>
-
-      <p>Has {points[selectedAnecdoteIndex]} votes</p>
+      <Anecdote
+        title="Anecdote of the day"
+        anecdote={anecdotes[selectedAnecdoteIndex]}
+        point={points[selectedAnecdoteIndex]}
+      />
 
       <div>
         <button onClick={vote}>Vote</button>
         <button onClick={selectRandomAnecdote}>Next anecdote</button>
       </div>
+
+      <Anecdote
+        title="Anecdote with most votes"
+        anecdote={anecdotes[topRatedAnecdoteIndex]}
+        point={points[topRatedAnecdoteIndex]}
+      />
     </>
   );
 };
