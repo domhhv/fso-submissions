@@ -6,24 +6,33 @@ const getRandomIndex = length => Math.floor(
 );
 
 const App = ({ anecdotes }) => {
-  const [selectedAnecdoteIndex, setSelectedAnecdoteIndex] = useState(0);
+  const { length } = anecdotes;
+  const initialPoints = Array(length).fill(0);
 
-  const selectRandomAnecdote = () => setSelectedAnecdoteIndex(
-    getRandomIndex(anecdotes.length),
-  );
+  const [selectedAnecdoteIndex, setSelectedAnecdoteIndex] = useState(0);
+  const [points, setPoints] = useState(initialPoints);
+
+  const selectRandomAnecdote = () => setSelectedAnecdoteIndex(getRandomIndex(length));
+
+  const vote = () => {
+    const tryToIncrease = (point, index) => point + Number(index === selectedAnecdoteIndex);
+
+    setPoints(points.map(tryToIncrease));
+  };
 
   return (
     <>
-      <p>
-        {anecdotes[selectedAnecdoteIndex]}
-      </p>
+      <p>{anecdotes[selectedAnecdoteIndex]}</p>
 
-      <button onClick={selectRandomAnecdote}>
-        Next anecdote
-      </button>
+      <p>Has {points[selectedAnecdoteIndex]} votes</p>
+
+      <div>
+        <button onClick={vote}>Vote</button>
+        <button onClick={selectRandomAnecdote}>Next anecdote</button>
+      </div>
     </>
   );
-}
+};
 
 const anecdotes = [
   'If it hurts, do it more often',
