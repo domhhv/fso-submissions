@@ -7,7 +7,13 @@ const Button = ({ text, handleClick }) => (
   </button>
 );
 
-const Statistic = ({ text, value }) => <p>{text} {value}</p>
+const Statistic = ({ text, value, symbolToAppend }) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+    {symbolToAppend && <td>{symbolToAppend}</td>}
+  </tr>
+)
 
 const Statistics = ({
   canReveal,
@@ -23,14 +29,16 @@ const Statistics = ({
     {
       canReveal
         ? (
-          <div>
-            <Statistic text="good" value={good} />
-            <Statistic text="neutral" value={neutral} />
-            <Statistic text="bad" value={bad} />
-            <Statistic text="all" value={all} />
-            <Statistic text="average" value={average} />
-            <Statistic text="positive" value={positive} />
-          </div>
+          <table>
+            <tbody>
+              <Statistic text="good" value={good} />
+              <Statistic text="neutral" value={neutral} />
+              <Statistic text="bad" value={bad} />
+              <Statistic text="all" value={all} />
+              <Statistic text="average" value={average} />
+              <Statistic text="positive" value={positive} symbolToAppend="%" />
+            </tbody>
+          </table>
         )
         : <p>No feedback given</p>
     }
@@ -71,6 +79,7 @@ const App = () => {
   )
 }
 
-ReactDOM.render(<App />,
+ReactDOM.render(
+  <App />,
   document.getElementById('root')
 )
