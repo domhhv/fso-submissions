@@ -1,17 +1,17 @@
 import React from 'react'
 
-import Part from "./Part";
+import Part from './Part'
 
 const renderContent = ({
-	id,
-	name,
-	exercises,
+  id,
+  name,
+  exercises
 }) => (
-	<Part
-		key={id}
-		name={name}
-		exercises={exercises}
-	/>
+  <Part
+    key={id}
+    name={name}
+    exercises={exercises}
+  />
 )
 
 const Content = ({ parts }) => parts.map(renderContent)
