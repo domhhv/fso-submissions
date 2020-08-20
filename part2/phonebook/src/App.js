@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import { withValue, preventify } from './utils'
 import PersonsForm from './components/PersonsForm'
@@ -10,6 +11,14 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [criteria, setCriteria] = useState('')
+
+  const resolvePersons = ({ data }) => setPersons(data)
+
+  const fetchPersons = () => {
+    axios('http://localhost:3001/persons').then(resolvePersons)
+  }
+
+  useEffect(fetchPersons, [])
 
   const controlsData = [{
     label: 'name',
@@ -24,13 +33,13 @@ const App = () => {
 
   const updatePersons = () => {
     if (!newName || !newNumber) {
-      return alert('All fields are required')
+      return window.alert('All fields are required')
     }
 
     const existing = ({ name }) => name === newName
 
     if (persons.find(existing)) {
-      return alert(`${newName} has already been added to the phonebook`)
+      return window.alert(`${newName} has already been added to the phonebook`)
     }
 
     setNewName('')
