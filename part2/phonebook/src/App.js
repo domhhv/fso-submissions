@@ -7,7 +7,7 @@ import Control from './components/Control'
 import Persons from './components/Persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: 'Taras Shevchenko', number: '+380 (99) 123 45 67' }])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [criteria, setCriteria] = useState('')
