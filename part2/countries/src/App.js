@@ -3,15 +3,14 @@ import axios from 'axios'
 
 import Countries from './components/Countries'
 
-const API_DOMAIN = 'https://restcountries.eu/rest/v2/name'
-
 const FIELDS = ['name', 'capital', 'population', 'languages', 'flag']
 
 const App = () => {
   const [name, setName] = useState('')
   const [countries, setCountries] = useState([])
+  const [countryDetailsIdx, setCountryDetailsIdx] = useState(null)
 
-  const generateURL = () => `${API_DOMAIN}/${name}?fields=${FIELDS.join(';')}`
+  const generateURL = () => `${process.env.REACT_APP_COUNTRIES_API_BASE_URL}/name/${name}?fields=${FIELDS.join(';')}`
 
   const resolveCountries = ({ data }) => setCountries(data)
 
@@ -19,6 +18,8 @@ const App = () => {
 
   const fetchCountries = () => {
     axios(generateURL()).then(resolveCountries).catch(clearCountries)
+
+    return setCountryDetailsIdx(null)
   }
 
   useEffect(fetchCountries, [name])
@@ -30,9 +31,9 @@ const App = () => {
       <label>
         find countries <input value={name} onChange={updateName} />
       </label>
-      <Countries items={countries} />
+      <Countries items={countries} countryDetailsIdx={countryDetailsIdx} onShowDetails={setCountryDetailsIdx} />
     </>
   )
 }
 
-export default App;
+export default App
