@@ -1,3 +1,19 @@
+# Countries app
+
+If you haven't already, sign up at [Weatherstack](https://weatherstack.com/documentation) to gain an API key
+
+Clone the [top-level repo](https://github.com/dgrishajev/fso-submissions), create `.env.local` file at the root of the project and paste your key, your file should like this afterwards:
+```
+REACT_APP_WEATHERSTACK_API_KEY=YOUR_API_KEY_WITHOUT_QUOTES
+```
+Then you can run the project from its root with `$ npm i && npm start`
+
+In case of an error try checking and killing a process on port 3000
+
+If you haven't taken to http://localhost:3000 open the link in your browser
+
+# Boilerplate readme from Facebook
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

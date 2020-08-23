@@ -10,10 +10,10 @@ const CityWeather = ({ cityName }) => {
   const generateURL = () => {
     const {
       REACT_APP_WEATHER_API_BASE_URL,
-      REACT_APP_WEATHERCAST_API_KEY,
+      REACT_APP_WEATHERSTACK_API_KEY,
     } = process.env
 
-    return `${REACT_APP_WEATHER_API_BASE_URL}/current?access_key=${REACT_APP_WEATHERCAST_API_KEY}&query=${cityName}`
+    return `${REACT_APP_WEATHER_API_BASE_URL}/current?access_key=${REACT_APP_WEATHERSTACK_API_KEY}&query=${cityName}`
   }
 
   const resolveWeather = ({ data }) => {
@@ -27,7 +27,7 @@ const CityWeather = ({ cityName }) => {
 
   const handleError = e => {
     setFailed(true)
-    console.log('You may need to provide a valid Weathercast API key in .env.local file at the root of the project')
+    console.log('You may need to provide a valid Weatherstack API key in .env.local file at the root of the project')
     console.error(e)
   }
 

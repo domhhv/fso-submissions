@@ -1,3 +1,45 @@
+# Phonebook app
+
+Clone the [top-level repo](https://github.com/dgrishajev/fso-submissions), create a `db.json` file at the root with `persons` property of an array value. You can paste this sample:
+```
+{
+  "persons": [
+    {
+      "name": "Arto Hellas",
+      "number": "040-123456",
+      "id": 1
+    },
+    {
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": 2
+    },
+    {
+      "name": "Dan Abramov",
+      "number": "12-43-234345",
+      "id": 3
+    },
+    {
+      "name": "Mary Poppendieck",
+      "number": "39-23-6423122",
+      "id": 4
+    }
+  ]
+}
+
+```
+Then you can run the project from its root as follows
+```
+$ npm install
+$ npm run server
+$ npm start (in a separate tab)
+```
+In case of an error try checking and killing processes on ports 3000 and 3001
+
+If you haven't taken to http://localhost:3000 open the link in your browser
+
+# Boilerplate readme from Facebook
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
