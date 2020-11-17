@@ -3,3 +3,4 @@ node_modules
 .idea
 .env*.local
 db.json
+**/build
