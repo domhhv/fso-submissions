@@ -21,4 +21,52 @@ const favoriteBlog = blogs => {
   return 0
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+const mostBlogs = blogs => {
+  const map = blogs.reduce((mapped, { author }) => {
+    mapped[author] = mapped[author] || {
+      author: author,
+      blogs: 0,
+    }
+
+    mapped[author].blogs++
+
+    return mapped
+  }, {})
+
+  const max = Object.values(map).reduce(
+    (most, item) => (
+      most.blogs > item.blogs
+        ? most
+        : item
+    ),
+    { blogs: 0 },
+  )
+
+  return max
+}
+
+const mostLikes = blogs => {
+  const map = blogs.reduce((mapped, { author, likes }) => {
+    mapped[author] = mapped[author] || {
+      author: author,
+      likes: 0,
+    }
+
+    mapped[author].likes += likes
+
+    return mapped
+  }, {})
+
+  const max = Object.values(map).reduce(
+    (most, item) => (
+      most.likes > item.likes
+        ? most
+        : item
+    ),
+    { likes: 0 },
+  )
+
+  return max
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }

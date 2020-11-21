@@ -1,10 +1,17 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const cors = require('cors')
+const mongoose = require('mongoose')
+require('express-async-errors')
+
 const blogsRouter = require('./controllers/blog')
 const { MONGODB_URL } = require('./utils/config')
 
-mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+})
 
 const app = express()
 
