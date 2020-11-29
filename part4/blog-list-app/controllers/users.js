@@ -10,8 +10,8 @@ usersRouter.get('/', async (req, res) => res.json(
 usersRouter.post('/', async ({ body }, res) => {
   const { name, username, password } = body
 
-  if (password.length < 3) {
-    const error = new Error('Password must be at least 3 characters long')
+  if (!password || password.length < 3) {
+    const error = new Error('Password is required and must be at least 3 characters long')
     error.name = 'ValidationError'
     throw error
   }

@@ -99,7 +99,7 @@ describe('user creation', () => {
       .send(user)
       .expect(400)
 
-    expect(response.body.error).toEqual("Password must be at least 3 characters long")
+    expect(response.body.error).toEqual("Password is required and must be at least 3 characters long")
 
     const usersAfterCreation = await User.find({})
 
@@ -118,13 +118,13 @@ describe('blogs fetching', () => {
 
   test('returns the correct amount of items', async () => {
     const blogs = await Blog.find({})
-    const response = await api.get('/api/blogs').set('Authorization', authHeader)
+    const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(blogs.length)
   })
 
   test('returns items with id field', async () => {
-    const response = await api.get('/api/blogs').set('Authorization', authHeader)
+    const response = await api.get('/api/blogs')
 
     expect(response.body[0].id).toBeDefined()
   })
@@ -132,8 +132,7 @@ describe('blogs fetching', () => {
 
 describe('blog creation', () => {
   test('succeeds with valid data', async () => {
-    const decodedToken = jwt.verify(authHeader.substring(7), process.env.SECRET)
-    const user = await User.findById(decodedToken.id)
+    const { id } = jwt.verify(authHeader.substring(7), process.env.SECRET)
     const title = 'Sample title'
 
     const blog = {
@@ -141,7 +140,7 @@ describe('blog creation', () => {
       author: 'Donald Duck',
       url: 'http://hello-world.com',
       likes: 21,
-      user: user._id
+      user: id
     }
 
     await api
@@ -192,6 +191,22 @@ describe('blog creation', () => {
 
     expect(blogsAfterCreation).toHaveLength(initialBlogs.length)
   })
+
+  test('requires authentication', async () => {
+    const blog = {
+      title: 'Any blog',
+      url: 'http://any-blog.com',
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(blog)
+      .expect(401)
+
+    const blogsAfterCreation = await Blog.find({})
+
+    expect(blogsAfterCreation).toHaveLength(initialBlogs.length)
+  })
 })
 
 describe('blog update', () => {
@@ -204,7 +219,6 @@ describe('blog update', () => {
 
     await api
       .put(`/api/blogs/${blogToUpdate._id}`, updateData)
-      .set('Authorization', authHeader)
       .send(updateData)
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -214,6 +228,25 @@ describe('blog update', () => {
     expect(blogAfterUpdate.title).toEqual(title)
     expect(blogAfterUpdate.likes).toEqual(likes)
     expect(blogAfterUpdate.url).toEqual(url)
+  })
+})
+
+describe('blog deletion', () => {
+  test('succeeds with valid id', async () => {
+    const [blogToDelete] = await Blog.find({})
+    blogToDelete.user = jwt.verify(authHeader.substring(7), process.env.SECRET).id
+    await blogToDelete.save()
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', authHeader)
+      .send()
+      .expect(204)
+
+    const blogsAfterDeletion = await Blog.find({})
+
+    expect(blogsAfterDeletion).toHaveLength(initialBlogs.length - 1)
+    expect(blogsAfterDeletion[0].id).not.toEqual(blogToDelete.id)
   })
 })
 

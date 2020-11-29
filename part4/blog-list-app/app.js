@@ -22,8 +22,8 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then(() => logger.info('connected to MongoDB'))
-  .catch(({ message }) => logger.error('error connecting to MongoDB: ', message))
+  .then(() => logger.info('Connected to MongoDB'))
+  .catch(({ message }) => logger.error(`Error connecting to MongoDB: ${message}`))
 
 const app = express()
 

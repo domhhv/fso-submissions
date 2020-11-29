@@ -9,8 +9,8 @@ blogsRouter.get('/', async (req, res) => res.json(
 ))
 
 blogsRouter.post('/', async ({ body, token }, res) => {
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  const user = await User.findById(decodedToken.id)
+  const { id } = jwt.verify(token, process.env.SECRET)
+  const user = await User.findById(id)
   const blog = new Blog({ ...body, user: user._id })
 
   const data = await blog.save()
