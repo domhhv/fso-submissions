@@ -2,7 +2,7 @@ import React from 'react'
 
 import BlogItem from './BlogItem'
 
-const BlogsList = ({ user, logOut, blogs }) => (
+const BlogsList = ({ user, logOut, blogs, updateLikes, removeBlog }) => (
   <>
     <div>
       <span>{user.user} is logged in</span>
@@ -14,7 +14,15 @@ const BlogsList = ({ user, logOut, blogs }) => (
       blogs.length
         ? (
           <ul>
-            {blogs.map(blog => <BlogItem key={blog.id} {...blog} />)}
+            {blogs.map(blog => (
+              <BlogItem
+                key={blog.id}
+                {...blog}
+                updateLikes={updateLikes}
+                removeBlog={removeBlog}
+                currentUserUsername={user.username}
+              />
+            ))}
           </ul>
         )
         : <p>No blogs yet</p>
