@@ -16,7 +16,11 @@ const BlogForm = forwardRef(({ addBlog }, ref) => {
   useImperativeHandle(ref, () => ({ clearFields }))
 
   const handleSubmit = () => {
-    addBlog({ title, author, url }).then(clearFields)
+    const promise = addBlog({ title, author, url })
+
+    if (promise) {
+      promise.then(clearFields)
+    }
   }
 
   return (
