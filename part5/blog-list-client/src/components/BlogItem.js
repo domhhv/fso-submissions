@@ -25,7 +25,7 @@ const BlogItem = ({
 
   return (
     <li style={blogItemStyle} className="blog-item">
-      {title} <b>by</b> {author}
+      <span>{title} <b>by</b> {author}</span>
       <button onClick={() => setDetailsVisible(!detailsVisible)}>
         {detailsVisible ? 'hide' : 'view'}
       </button>

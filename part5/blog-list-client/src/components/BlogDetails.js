@@ -14,8 +14,10 @@ const BlogDetails = ({
       <span>{url}</span>
     </div>
     <div>
-      <span>likes {likes}</span>
-      <button onClick={() => updateLikes(id, likes + 1)}>like</button>
+      <span>
+        likes <b className="likes-amount">{likes}</b>
+      </span>
+      <button className="like-button" onClick={() => updateLikes(id, likes + 1)}>like</button>
     </div>
     <div>
       <span>{user.name}</span>
