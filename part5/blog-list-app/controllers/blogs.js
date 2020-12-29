@@ -17,7 +17,16 @@ blogsRouter.post('/', async ({ body, token }, res) => {
   user.blogs = [...user.blogs, data._id]
   await user.save()
 
-  res.status(201).json(data)
+  const populatedData = {
+    ...data,
+    user: {
+      id,
+      name: user.name,
+      username: user.username,
+    },
+  }
+
+  res.status(201).json(populatedData)
 })
 
 blogsRouter.put('/:id', async ({ body, params }, res) => {

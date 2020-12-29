@@ -1,6 +1,6 @@
 # Blog list API
 
-It's the same app from the [previous part](https://github.com/dgrishajev/fso-submissions/tree/main/part4) slightly altered to match this part's client app needs.
+It's the same app from the [previous part](https://github.com/dgrishajev/fso-submissions/tree/main/part4) slightly altered to match this part's [client app](https://github.com/dgrishajev/fso-submissions/tree/main/part5/blog-list-client) needs.
 
 ### How to run
 
@@ -16,6 +16,10 @@ MONGODB_URL_TEST = 'mongodb+srv://username:password@cluster0.peec3.mongodb.net/t
 Where `MONGODB_URL` and `MONGODB_URL_TEST` are links to your MongoDB Atlas Clusters ([sign up](https://www.mongodb.com/cloud/atlas/register) and follow the instructions on [creation](https://docs.atlas.mongodb.com/tutorial/create-new-cluster)).
 
 Kill processes on port 3003 if any and then start the server with `npm run dev` (server live reload enabled).
+
+#### Running for front-end e2e
+
+```$ npm run start:test```
 
 ### How to use
 

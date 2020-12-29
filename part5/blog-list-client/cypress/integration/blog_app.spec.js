@@ -21,8 +21,8 @@ describe('Blog app', function() {
     cy.contains('Log in')
   })
 
-  describe('Login',function() {
-    it('succeeds with correct credentials', function() {
+  describe('Logging in',function() {
+    it('Succeeds with correct credentials', function() {
       cy.get('#username').type(user.username)
       cy.get('#password').type(user.password)
       cy.get('#log-in-button').click()
@@ -30,7 +30,7 @@ describe('Blog app', function() {
       cy.contains(`${user.name} is logged in`)
     })
 
-    it('fails with wrong credentials', function() {
+    it('Fails with wrong credentials', function() {
       cy.get('#username').type(user.username)
       cy.get('#password').type(user.password.split('').reverse().join(''))
       cy.get('#log-in-button').click()
