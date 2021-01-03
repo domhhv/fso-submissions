@@ -8,7 +8,7 @@ export const updateFilter = criteria => ({
 const filterReducer = (state = '', { type, payload }) => {
   switch (type) {
     case FILTER:
-      return payload.criteria
+      return payload.criteria.toLowerCase()
 
     default:
       return state

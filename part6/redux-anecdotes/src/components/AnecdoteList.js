@@ -1,24 +1,14 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
 import { incrementVotes, initAnecdotes } from '../reducers/anecdotesReducer'
 
-const AnecdoteList = () => {
-  const extractAnecdotes = ({ anecdotes, filter }) => anecdotes
-    .sort((l, r) => r.votes - l.votes)
-    .filter(({ content }) => content.includes(filter))
-  const dispatch = useDispatch()
-  const anecdotes = useSelector(extractAnecdotes)
-
-  const vote = item => {
-    dispatch(incrementVotes(item))
-  }
-
+const AnecdoteList = ({ extractedAnecdotes, vote, initItems }) => {
   useEffect(() => {
-    dispatch(initAnecdotes())
-  }, [dispatch])
+    initItems()
+  }, [initItems])
 
-  return anecdotes.map(item =>
+  return extractedAnecdotes.map(item =>
     <div key={item.id}>
       <div>{item.content}</div>
       <div>
@@ -31,4 +21,15 @@ const AnecdoteList = () => {
   )
 }
 
-export default AnecdoteList
+const mapStateToProps = ({ anecdotes, filter }) => ({
+  extractedAnecdotes: anecdotes
+    .sort((l, r) => r.votes - l.votes)
+    .filter(({ content }) => content.toLowerCase().includes(filter))
+})
+
+const mapDispatchToProps = {
+  vote: incrementVotes,
+  initItems: initAnecdotes,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)
