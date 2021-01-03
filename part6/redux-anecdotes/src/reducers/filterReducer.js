@@ -9,6 +9,7 @@ const filterReducer = (state = '', { type, payload }) => {
   switch (type) {
     case FILTER:
       return payload.criteria
+
     default:
       return state
   }

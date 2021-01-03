@@ -1,6 +1,6 @@
 import React  from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { createNotification } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Notification = () => {
   const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const Notification = () => {
 
   if (notification) {
     setTimeout(() => {
-      dispatch(createNotification(''))
+      dispatch(setNotification(''))
     }, 5000)
 
     return (
