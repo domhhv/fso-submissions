@@ -1,4 +1,5 @@
 import deepFreeze from 'deep-freeze'
+
 import counterReducer from './reducer'
 
 describe('unicafe reducer', () => {
@@ -12,7 +13,6 @@ describe('unicafe reducer', () => {
     const action = {
       type: 'DO_NOTHING'
     }
-
     const newState = counterReducer(undefined, action)
     expect(newState).toEqual(initialState)
   })
@@ -22,7 +22,6 @@ describe('unicafe reducer', () => {
       type: 'GOOD'
     }
     const state = initialState
-
     deepFreeze(state)
     const newState = counterReducer(state, action)
     expect(newState).toEqual({
