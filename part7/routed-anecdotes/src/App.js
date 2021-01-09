@@ -7,6 +7,9 @@ import {
   useHistory,
 } from 'react-router-dom'
 
+import { useField } from './hooks'
+import { extractValues, preventify } from './utils'
+
 const Menu = () => {
   const padding = {
     paddingRight: 5
@@ -67,15 +70,13 @@ const Footer = () => (
 
 const CreateNew = ({ addNew, setNotification, notificationTimeoutId, setNotificationTimeoutId }) => {
   const history = useHistory()
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const [content, resetContent] = useField('content')
+  const [author, resetAuthor] = useField('author')
+  const [info, resetInfo] = useField('info')
 
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    addNew({ content, author, info, votes: 0 })
-    setNotification(`You created ${content}`)
+  const handleSubmit = () => {
+    addNew(extractValues({ content, author, info }))
+    setNotification(`You created ${content.value}`)
 
     if (notificationTimeoutId) {
       window.clearTimeout(notificationTimeoutId)
@@ -89,23 +90,30 @@ const CreateNew = ({ addNew, setNotification, notificationTimeoutId, setNotifica
     history.push('/')
   }
 
+  const resetAll = () => {
+    resetContent()
+    resetAuthor()
+    resetInfo()
+  }
+
   return (
     <div>
       <h2>Create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={preventify(handleSubmit)}>
         <div>
           Content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...content} />
         </div>
         <div>
           Author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author} />
         </div>
         <div>
           Url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...info} />
         </div>
         <button>Create</button>
+        <button onClick={preventify(resetAll)}>Reset</button>
       </form>
     </div>
   )
@@ -132,9 +140,14 @@ const App = () => {
   const [notificationTimeoutId, setNotificationTimeoutId] = useState(null)
   const [notification, setNotification] = useState('')
 
-  const addNew = (anecdote) => {
+  const addNew = anecdote => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
-    setAnecdotes(anecdotes.concat(anecdote))
+    const populatedAnecdote = {
+      ...anecdote,
+      votes: 0,
+      id: (Math.random() * 10000).toFixed(0),
+    }
+    setAnecdotes(anecdotes.concat(populatedAnecdote))
   }
 
   const anecdoteById = id => anecdotes.find(a => a.id === id)
